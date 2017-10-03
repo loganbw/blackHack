@@ -1,12 +1,9 @@
 package com.logan;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Deck {
-    private ArrayList<Card> cards = new ArrayList<Card>();
+    protected ArrayList<Card> cards = new ArrayList<Card>();
     private String[] suits = {"spade", "club", "heart", "diamond"};
     private int deckSize = 0;
 
@@ -17,6 +14,10 @@ public class Deck {
                 deckSize++;
             }
         }
+    }
+
+    public Deck(ArrayList<Card> cards) {
+        this.cards = cards;
     }
 
     public int getDeckSize() {
@@ -32,9 +33,25 @@ public class Deck {
         return cards.remove(0);
     }
 
+
     public void shuffle(){
-        Collections.shuffle(cards);
-        }
+        Random rng = new Random();
+
+        Collections.shuffle(cards, rng);
+        // isn't joel cute?
+    }
+
+    public void showCard() {
+//        List<Card> hand = new ArrayList<Card>();
+//        Card thisCard = drawCard();
+//        hand.add(thisCard);
+//        hand.add(thisCard);
+//        hand.add(thisCard);
+//        System.out.println("drawn card: " + hand.get(thisCard.getFaceValue()));
 
     }
+
+
+
+}
 
