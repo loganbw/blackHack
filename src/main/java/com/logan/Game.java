@@ -16,6 +16,7 @@ public class Game {
         boolean dealerDraw = false;
         int sum = 0;
         int dealerSum = 0;
+
         Scanner scanner = new Scanner(System.in);
 
         while(true) {
@@ -28,16 +29,35 @@ public class Game {
                 }
 
             if (dealerDraw) {
-                if (dealerSum <= sum) {
+                // the dealer draws if he is lower that the player
+                if (dealerSum < 17) {
                     dealerHand.draw(deck);
-
                     dealerSum = 0;
                     for (Card card : dealerHand.getCards()) {
-                        int cardValue = card.getFaceValue();
+                        Integer cardValue = card.getFaceValue();
+                        if (card.getFaceValue()  == 1 && sum <= 10){
+                            cardValue = 11;
+                        }
+                        if (card.getFaceValue()  == 11 && sum >= 11){
+                            cardValue = 1;
+                        }
+
+                        if (card.getFaceValue() == 11
+                                || card.getFaceValue()  == 12
+                                || card.getFaceValue()  == 13){
+                            cardValue = 10;
+                        }
+                        System.out.println("dealer drew " + cardValue);
                         dealerSum += cardValue;
+                        System.out.println( "the sum of the dealers cards are " + dealerSum + " " + card.getSuite());
+                        System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+
                     }
                 }
-                System.out.println( "the sum of the dealers cards are " + dealerSum);
+                if (dealerSum >= sum && sum != 0 && dealerSum < 22 ){
+                    System.out.println("the dealer wins");
+                    break;
+                }
             }
             if (!dealerDraw) {
                 if (playerHand.getCards().isEmpty() && dealerHand.getCards().isEmpty()) {
@@ -46,16 +66,47 @@ public class Game {
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                     for (int i = 0; i < 2; i++) {
                         playerHand.draw(deck);
+                        //this for loop checks for ace's and jack queen's and king's
+                        for (Card card : playerHand.getCards()) {
+                            Integer cardValue = card.getFaceValue();
+                            if (card.getFaceValue()  == 1 && sum <= 10){
+                                cardValue = 11;
+                            }
+                            if (card.getFaceValue()  == 11 && sum >= 11){
+                                cardValue = 1;
+                            }
+
+                            if (card.getFaceValue() == 11
+                                    || card.getFaceValue()  == 12
+                                    || card.getFaceValue()  == 13){
+                                cardValue = 10;
+                            }
+
+                            sum += cardValue;
+                        }
                     }
                     dealerHand.draw(deck);
                     for (Card card : dealerHand.getCards()) {
-                        int cardValue = card.getFaceValue();
+                        Integer cardValue = card.getFaceValue();
+                        if (card.getFaceValue()  == 1 && sum <= 10){
+                            cardValue = 11;
+                        }
+                        if (card.getFaceValue()  == 11 && sum >= 11){
+                            cardValue = 1;
+                        }
+
+                        if (card.getFaceValue() == 11
+                                || card.getFaceValue()  == 12
+                                || card.getFaceValue()  == 13){
+                            cardValue = 10;
+                        }
+                        System.out.println("dealer drew " + cardValue);
                         dealerSum += cardValue;
+                        System.out.println("the dealer has " + dealerSum + " " + card.getSuite() );
                     }
 
-                    System.out.println("the dealer has " + dealerSum );
-
                 }
+
                 else {
                     System.out.println("hit or stay?");
                     String drawChoice = scanner.nextLine();
@@ -65,13 +116,27 @@ public class Game {
                         dealerDraw = true;
                     }
                 }
-            }
+
             sum = 0;
             for (Card card : playerHand.getCards()) {
-                int cardValue = card.getFaceValue();
+                Integer cardValue = card.getFaceValue();
+                    if (card.getFaceValue()  == 1 && sum <= 10){
+                        cardValue = 11;
+                    }
+                if (card.getFaceValue()  == 11 && sum >= 11){
+                    cardValue = 1;
+                }
+
+                    if (card.getFaceValue() == 11
+                        || card.getFaceValue()  == 12
+                        || card.getFaceValue()  == 13){
+                        cardValue = 10;
+                    }
+
                 sum += cardValue;
+                System.out.println("you have " + cardValue + " " + card.getSuite() + " in your hand");
             }
-            System.out.println("You are sitting at " + sum);
+                System.out.println("You are sitting at " + sum);
             System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
             if (sum == 21 && playerHand.getCards().size() == 2) {
                 System.out.println("YOU HIT BLACKJACK!");
@@ -79,7 +144,7 @@ public class Game {
             }
 
         }
-    }
+    }}
 
 
 }
