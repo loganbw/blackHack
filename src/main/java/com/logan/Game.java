@@ -22,35 +22,46 @@ public class Game {
             if (sum > 21) {
                 System.out.println("you loss!");
                 break;
-            } else if (dealerSum > 21) {
+            }  if (dealerSum > 21) {
                 System.out.println("You've Won!");
                 break;
                 }
+
             if (dealerDraw) {
-                if (dealerSum < sum) {
+                if (dealerSum <= sum) {
                     dealerHand.draw(deck);
+
+                    dealerSum = 0;
+                    for (Card card : dealerHand.getCards()) {
+                        int cardValue = card.getFaceValue();
+                        dealerSum += cardValue;
+                    }
                 }
-                dealerSum = 0;
-                for (Card card : dealerHand.getCards()) {
-                    int cardValue = card.getFaceValue();
-                    dealerSum += cardValue;
-                }
-                System.out.println(dealerSum);
-            } else if (!dealerDraw) {
-                if (playerHand.getCards().isEmpty()) {
+                System.out.println( "the sum of the dealers cards are " + dealerSum);
+            }
+            if (!dealerDraw) {
+                if (playerHand.getCards().isEmpty() && dealerHand.getCards().isEmpty()) {
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                     System.out.println("First Draw");
-
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                     for (int i = 0; i < 2; i++) {
                         playerHand.draw(deck);
                     }
-                } else {
+                    dealerHand.draw(deck);
+                    for (Card card : dealerHand.getCards()) {
+                        int cardValue = card.getFaceValue();
+                        dealerSum += cardValue;
+                    }
+
+                    System.out.println("the dealer has " + dealerSum );
+
+                }
+                else {
                     System.out.println("hit or stay?");
                     String drawChoice = scanner.nextLine();
                     if (drawChoice.equals("hit")) {
                         playerHand.draw(deck);
-                    } else if (drawChoice.equals("stay")) {
+                    }  else if (drawChoice.equals("stay")) {
                         dealerDraw = true;
                     }
                 }
@@ -60,12 +71,12 @@ public class Game {
                 int cardValue = card.getFaceValue();
                 sum += cardValue;
             }
+            System.out.println("You are sitting at " + sum);
+            System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
             if (sum == 21 && playerHand.getCards().size() == 2) {
                 System.out.println("YOU HIT BLACKJACK!");
                 break;
             }
-            System.out.println("You are sitting at " + sum);
-            System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 
         }
     }
